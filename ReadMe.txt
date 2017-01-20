@@ -6,7 +6,7 @@ This is work version of plugin.
 
 To add it in Acad:
 	1. Add Your data in \\AutoCad_milling\AutoCad_milling\bin\Debug\DataInputData.xlsx . Use the format from the file! 
-		(Must use exact file name and file format and file location this version of plugin).
+		(Must use exact file name, file format and file location in this version of plugin).
 	2. Open new drawing ACad or C3D;
 	2. Type - Netload;
 	3. Navigate to \\AutoCad_milling\AutoCad_milling\bin\Debug;
