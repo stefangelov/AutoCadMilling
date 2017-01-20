@@ -1,0 +1,19 @@
+OK  # Excel Read Input Data - (Private event);
+OK  # Process Input Data and Convert It To Milling Element;
+	
+	# Process Input Data and Convert It To Milling Element (when is in diferent ranges);
+OK		# Function to calculatin Milling Element Width;
+		# Upgrade upper Function to return milling elements when master element through several ranges;
+
+	# Add Station Label as ProfilNameLabel;
+	# UI in ACad commandline;
+	# Find how to propose to User to select Him Excel File;
+		if find upper
+		# Change Function that open the Excel file to take one argument -> file path to chosen from User Excel file;
+
+	# Class for Cross-section. 
+		# Hold all milling elements for whole cross section;
+		# Find slopes of pavement in left and right;
+
+	# Class for hole road
+	# Use upper thow Classes to do hole work

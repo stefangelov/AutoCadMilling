@@ -1,0 +1,12 @@
+D:\Trash\AcadPluginTests\AutoCad_milling\MillingDataEngine\bin\Debug\MillingDataEngine.dll
+D:\Trash\AcadPluginTests\AutoCad_milling\MillingDataEngine\bin\Debug\MillingDataEngine.pdb
+D:\Trash\AcadPluginTests\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.csprojResolveAssemblyReference.cache
+D:\Trash\AcadPluginTests\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.dll
+D:\Trash\AcadPluginTests\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.pdb
+D:\Trash\AcadPluginTests\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.csproj.ResolveComReference.cache
+E:\Dev\AutoCad_milling\MillingDataEngine\bin\Debug\MillingDataEngine.dll
+E:\Dev\AutoCad_milling\MillingDataEngine\bin\Debug\MillingDataEngine.pdb
+E:\Dev\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.csprojResolveAssemblyReference.cache
+E:\Dev\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.csproj.ResolveComReference.cache
+E:\Dev\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.dll
+E:\Dev\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.pdb
