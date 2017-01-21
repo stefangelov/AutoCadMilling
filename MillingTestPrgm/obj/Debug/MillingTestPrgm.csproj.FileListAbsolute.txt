@@ -17,3 +17,11 @@ E:\Dev\AutoCad_milling\MillingTestPrgm\obj\Debug\MillingTestPrgm.csprojResolveAs
 E:\Dev\AutoCad_milling\trunk\MillingTestPrgm\bin\Debug\MillingTestPrgm.exe.config
 E:\Dev\AutoCad_milling\trunk\MillingTestPrgm\obj\Debug\MillingTestPrgm.exe
 E:\Dev\AutoCad_milling\trunk\MillingTestPrgm\obj\Debug\MillingTestPrgm.pdb
+E:\Dev\AutoCadMilling.git\trunk\MillingTestPrgm\bin\Debug\MillingTestPrgm.exe.config
+E:\Dev\AutoCadMilling.git\trunk\MillingTestPrgm\obj\Debug\MillingTestPrgm.exe
+E:\Dev\AutoCadMilling.git\trunk\MillingTestPrgm\obj\Debug\MillingTestPrgm.pdb
+E:\Dev\AutoCadMilling.git\trunk\MillingTestPrgm\bin\Debug\MillingTestPrgm.exe
+E:\Dev\AutoCadMilling.git\trunk\MillingTestPrgm\bin\Debug\MillingTestPrgm.pdb
+E:\Dev\AutoCadMilling.git\trunk\MillingTestPrgm\bin\Debug\MillingDataEngine.dll
+E:\Dev\AutoCadMilling.git\trunk\MillingTestPrgm\bin\Debug\MillingDataEngine.pdb
+E:\Dev\AutoCadMilling.git\trunk\MillingTestPrgm\obj\Debug\MillingTestPrgm.csprojResolveAssemblyReference.cache

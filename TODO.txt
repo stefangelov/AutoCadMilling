@@ -1,4 +1,4 @@
-    # ADD Autodesk lib as local copy to project;	
+OK    # ADD Autodesk lib as local copy to project;	
 OK  # Excel Read Input Data - (Private event);
 OK  # Process Input Data and Convert It To Milling Element;
 	
@@ -8,9 +8,9 @@ OK		# Function to calculatin Milling Element Width;
 
 	# Add Station Label as ProfilNameLabel;
 	# UI in ACad commandline;
-	# Find how to propose to User to select Him Excel File;
+OK	# Find how to propose to User to select Him Excel File;
 		if find upper
-		# Change Function that open the Excel file to take one argument -> file path to chosen from User Excel file;
+	OK	# Change Function that open the Excel file to take one argument -> file path to chosen from User Excel file;
 
 	# Class for Cross-section. 
 		# Hold all milling elements for whole cross section;

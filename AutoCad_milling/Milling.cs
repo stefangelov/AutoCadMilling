@@ -1,9 +1,8 @@
 ﻿ using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.Geometry;
-using Autodesk.AutoCAD.Colors;
 using System.Collections.Generic;
+using System;
 
 namespace AutoCad_milling
 {
@@ -11,6 +10,7 @@ namespace AutoCad_milling
     {
         // the name of Acad Command
         [CommandMethod("MillingDiagramCreator")]
+        [STAThread]
         public static void CreateAndAssignALayer()
         {
             // Get the current document and database

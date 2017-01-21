@@ -1,5 +1,6 @@
 ﻿using Excel = Microsoft.Office.Interop.Excel;
 using System;
+using System.Windows.Forms;
 using System.Collections.Generic;
 using System.IO;
 
@@ -7,10 +8,21 @@ namespace MillingDataEngine.Func
 {
     public class ExcelDataRead
     {
+        static string ReturnSelectedFilePath()
+        {
+            string theFilePath = "";
+            OpenFileDialog fbd = new OpenFileDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                theFilePath = fbd.FileName;
+            }
+            return theFilePath;
+        }
+        
         public static string[,] ReadData()
         {
             Excel.Application xlApp = new Excel.Application();
-            string fileName = "InputData.xlsx";
+            string fileName = ReturnSelectedFilePath();
             string path = Path.Combine(Environment.CurrentDirectory, @"Data\", fileName);
             Excel.Workbook xlWorkBook = xlApp.Workbooks.Open(path); // on other machine change path to wor proper
             Excel.Worksheet xlWorkSheet = xlWorkBook.ActiveSheet;

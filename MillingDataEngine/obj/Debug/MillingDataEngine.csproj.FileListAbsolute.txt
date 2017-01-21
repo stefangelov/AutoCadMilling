@@ -10,3 +10,9 @@ E:\Dev\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.csprojResol
 E:\Dev\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.csproj.ResolveComReference.cache
 E:\Dev\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.dll
 E:\Dev\AutoCad_milling\MillingDataEngine\obj\Debug\MillingDataEngine.pdb
+E:\Dev\AutoCadMilling.git\trunk\MillingDataEngine\bin\Debug\MillingDataEngine.dll
+E:\Dev\AutoCadMilling.git\trunk\MillingDataEngine\bin\Debug\MillingDataEngine.pdb
+E:\Dev\AutoCadMilling.git\trunk\MillingDataEngine\obj\Debug\MillingDataEngine.csprojResolveAssemblyReference.cache
+E:\Dev\AutoCadMilling.git\trunk\MillingDataEngine\obj\Debug\MillingDataEngine.csproj.ResolveComReference.cache
+E:\Dev\AutoCadMilling.git\trunk\MillingDataEngine\obj\Debug\MillingDataEngine.dll
+E:\Dev\AutoCadMilling.git\trunk\MillingDataEngine\obj\Debug\MillingDataEngine.pdb

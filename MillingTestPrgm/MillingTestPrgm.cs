@@ -6,6 +6,7 @@ namespace MillingTestPrgm
     class AutoCad_milling
     {
         // use this to test withoud open Acad or C3D
+        [STAThread]
         static void Main(string[] args)
        {
             string[,] excelDataVariable = MillingDataEngine.Func.ExcelDataRead.ReadData();
