@@ -13,5 +13,7 @@ To add it in Acad:
 	6. In command line type: MillingDiagramCreator and press Enter;
 	7. Navigate to Your MS Excel file and select it;
 	8. Prest two times scroll button of Your mouse OR in command line type ( "Z" + Enter and "E" + Enter ) to Zoom Extents.
+	
+Note: Тhe thickness of the binder layer is adopted constants!
 
 Soon will have more features.
