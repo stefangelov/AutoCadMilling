@@ -158,10 +158,10 @@ namespace MillingDataEngine.Func
             double startMillingDepth = (projStartLevel - projLayerThick / 100 - existStartLevel) * -100;
             double endMillingDepth = (projEndLevel - projLayerThick / 100 - existEndLevel) * -100;
 
-            // not proud of the following
-            // from here
+			// hold is the milling elemen is in one range of milling depth
             bool areInOneRange = false;
-            areInOneRange = (startMillingDepth > DataStruct.MillingElement.MillingRange_1[0] &&
+            // check upper and asign to variable
+			areInOneRange = (startMillingDepth > DataStruct.MillingElement.MillingRange_1[0] &&
                 startMillingDepth <= DataStruct.MillingElement.MillingRange_1[1] &&
                 endMillingDepth > DataStruct.MillingElement.MillingRange_1[0] &&
                 endMillingDepth <= DataStruct.MillingElement.MillingRange_1[1]) ||
@@ -175,7 +175,6 @@ namespace MillingDataEngine.Func
                 endMillingDepth <= DataStruct.MillingElement.MillingRange_3[1]) ||
                 (startMillingDepth > DataStruct.MillingElement.MillingRange_3[1] &&
                 endMillingDepth > DataStruct.MillingElement.MillingRange_3[1]);
-            // to here :(
 
             if (areInOneRange)
             {
