@@ -1,17 +1,22 @@
-﻿ using Autodesk.AutoCAD.Runtime;
+﻿using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.Geometry;
+using Autodesk.AutoCAD.Colors;
 using System.Collections.Generic;
 using System;
+using Autodesk.Civil.ApplicationServices;
+using Autodesk.AutoCAD.EditorInput;
+using Autodesk.Civil.DatabaseServices;
 
 namespace AutoCad_milling
 {
     public class Milling
     {
-        // the name of Acad Command
+        // the name of Acad Command to insert milling depth in plan view
         [CommandMethod("MillingDiagramCreator")]
         [STAThread]
-        public static void CreateAndAssignALayer()
+        public static void CreateAddMillingElements()
         {
             // Get the current document and database
             Document acDoc = Application.DocumentManager.MdiActiveDocument;
@@ -64,5 +69,20 @@ namespace AutoCad_milling
                 acTrans.Commit();
             }
         }
+
+        // the name of Acad Command to insert milling depth in Profile View
+        [CommandMethod ("MillingToProfileView")]
+        [STAThread]
+        public static void CreateMillingElementsToProfileView()
+        {
+            CivilDocument doc = CivilApplication.ActiveDocument;
+            Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
+            using (Transaction ts = Application.DocumentManager.MdiActiveDocument.Database.TransactionManager.StartTransaction())
+            {
+                var promptResultsPV = ed.GetEntity("Selec Profile View");
+                
+            }
+        }
+
     }
 }
