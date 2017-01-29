@@ -69,20 +69,5 @@ namespace AutoCad_milling
                 acTrans.Commit();
             }
         }
-
-        // the name of Acad Command to insert milling depth in Profile View
-        [CommandMethod ("MillingToProfileView")]
-        [STAThread]
-        public static void CreateMillingElementsToProfileView()
-        {
-            CivilDocument doc = CivilApplication.ActiveDocument;
-            Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
-            using (Transaction ts = Application.DocumentManager.MdiActiveDocument.Database.TransactionManager.StartTransaction())
-            {
-                var promptResultsPV = ed.GetEntity("Selec Profile View");
-                
-            }
-        }
-
     }
 }
