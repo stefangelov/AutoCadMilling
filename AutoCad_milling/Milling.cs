@@ -8,6 +8,7 @@ using System;
 using Autodesk.Civil.ApplicationServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.Civil.DatabaseServices;
+using Autodesk.AECC.Interop.Roadway;
 
 namespace AutoCad_milling
 {
@@ -67,6 +68,50 @@ namespace AutoCad_milling
                 
                 // Save the changes and dispose of the transaction
                 acTrans.Commit();
+            }
+        }
+         // the name of Acad Command to insert milling depth in plan view
+        [CommandMethod("MillingDepthToProfileView")]
+        [STAThread]
+        public static void MillingDepthToProfileView()
+        {
+            CivilDocument civilDoc = CivilApplication.ActiveDocument;
+
+            Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
+
+            using (Transaction ts = Application.DocumentManager.MdiActiveDocument.
+                Database.TransactionManager.StartTransaction())
+            {
+                // ask user to select Aligment
+                PromptEntityOptions opt = new PromptEntityOptions("\nSelect an Alignment");
+                opt.SetRejectMessage("\nObject must be an alignment.\n");
+                opt.AddAllowedClass(typeof(Alignment), false);
+                ObjectId alignID = ed.GetEntity(opt).ObjectId;
+                Alignment myAlignment = ts.GetObject(alignID, OpenMode.ForRead) as Alignment;
+                
+                ObjectIdCollection sampleLineIdCollection = myAlignment.GetSampleLineGroupIds();
+
+                SampleLineGroup sampleLineGroup = sampleLineIdCollection[0].GetObject(OpenMode.ForRead) as SampleLineGroup;
+
+                SectionViewGroupCollection sectionViewGrouopColection = sampleLineGroup.SectionViewGroups;
+
+                SectionViewGroup theSectionViewGroup = sectionViewGrouopColection[6];
+
+                ObjectIdCollection sectionViewIdColection = theSectionViewGroup.GetSectionViewIds();
+
+                foreach (ObjectId sectionViewId in sectionViewIdColection)
+                {
+                    SectionView theSectionView = ts.GetObject(sectionViewId, OpenMode.ForRead) as SectionView;
+                    SectionViewProfileGradePointCollection sectionViewPointCollection = theSectionView.ProfileGradePoints;
+                    Point3d theLocation = theSectionView.Location;
+
+
+
+                    ed.WriteMessage("\nSV {0}, X: {1}, Y: {2}", theSectionView.Name, theLocation.X, theLocation.Y);
+
+                }
+
+                ed.WriteMessage("\nTest end!");
             }
         }
     }

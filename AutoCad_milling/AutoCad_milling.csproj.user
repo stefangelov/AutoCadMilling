@@ -3,6 +3,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
     <StartProgram>c:\Program Files\Autodesk\AutoCAD 2016\acad.exe</StartProgram>
-    <StartArguments>/product ACAD /language "en-US"</StartArguments>
+    <StartArguments>/product "C3D"</StartArguments>
   </PropertyGroup>
 </Project>

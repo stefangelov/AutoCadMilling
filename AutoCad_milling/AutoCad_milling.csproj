@@ -51,6 +51,22 @@
       <HintPath>C:\Program Files\Autodesk\AutoCAD 2016\C3D\AeccDbMgd.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Autodesk.AECC.Interop.Land">
+      <HintPath>C:\Program Files\Autodesk\AutoCAD 2016\C3D\Autodesk.AECC.Interop.Land.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Autodesk.AECC.Interop.Roadway">
+      <HintPath>C:\Program Files\Autodesk\AutoCAD 2016\C3D\Autodesk.AECC.Interop.Roadway.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Autodesk.AECC.Interop.UiLand">
+      <HintPath>C:\Program Files\Autodesk\AutoCAD 2016\C3D\Autodesk.AECC.Interop.UiLand.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Autodesk.AECC.Interop.UiRoadway">
+      <HintPath>C:\Program Files\Autodesk\AutoCAD 2016\C3D\Autodesk.AECC.Interop.UiRoadway.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
