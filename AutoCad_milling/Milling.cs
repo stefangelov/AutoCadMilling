@@ -9,6 +9,7 @@ using Autodesk.Civil.ApplicationServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.Civil.DatabaseServices;
 using Autodesk.AECC.Interop.Roadway;
+using System.IO;
 
 namespace AutoCad_milling
 {
@@ -37,7 +38,7 @@ namespace AutoCad_milling
                 MillingDataEngine.Func.Layers.AddLayers("StA_Strugane_3_5", 4, acTrans, acLyrTbl);
                 MillingDataEngine.Func.Layers.AddLayers("StA_Strugane_0_3", 2, acTrans, acLyrTbl);
                 MillingDataEngine.Func.Layers.AddLayers("Border", 1, acTrans, acLyrTbl);
-                MillingDataEngine.Func.Layers.AddLayers("Axis", 1, acTrans, acLyrTbl); // After drawing creation You must change line type manual.
+                MillingDataEngine.Func.Layers.AddLayers("Axis", 1, acTrans, acLyrTbl); // After drawing creation You must change line type manual (for now).
                 MillingDataEngine.Func.Layers.AddLayers("Texts", 7, acTrans, acLyrTbl);
 
                 
@@ -50,7 +51,7 @@ namespace AutoCad_milling
                 acBlkTblRec = acTrans.GetObject(acBlkTbl[BlockTableRecord.ModelSpace],
                 OpenMode.ForWrite) as BlockTableRecord;
 
-                // create test Elements (Next change the name from "Test" to something other)
+                // create test Elements
                 MillingDataEngine.DataStruct.RoadSection theRoadSection = MillingDataEngine.Func.ExcelDataRead.RoadSectionElementsBuilder(MillingDataEngine.Func.ExcelDataRead.ReadData());
                 List<MillingDataEngine.DataStruct.MillingElement> listOfMillingElements = new List<MillingDataEngine.DataStruct.MillingElement>();
                 
@@ -63,14 +64,16 @@ namespace AutoCad_milling
                 }
 
                 MillingDataEngine.DataStruct.MillingElement[] allTestElements = listOfMillingElements.ToArray();
-                // drow test Elements
+                // drow Elements
                 MillingDataEngine.Func.DrawMillingElements.Drow(allTestElements, acTrans, acBlkTblRec, acCurDb);
                 
                 // Save the changes and dispose of the transaction
                 acTrans.Commit();
             }
         }
-         // the name of Acad Command to insert milling depth in plan view
+
+
+         // the name of Acad Command to insert milling depth on section profile views
         [CommandMethod("MillingDepthToProfileView")]
         [STAThread]
         public static void MillingDepthToProfileView()
@@ -79,39 +82,49 @@ namespace AutoCad_milling
 
             Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
 
+            List<string> resultForFile = new List<string>();
+
             using (Transaction ts = Application.DocumentManager.MdiActiveDocument.
                 Database.TransactionManager.StartTransaction())
-            {
-                // ask user to select Aligment
+                {
+                // dterminate location of section view profiles
+                // ask user to select Alignment
                 PromptEntityOptions opt = new PromptEntityOptions("\nSelect an Alignment");
                 opt.SetRejectMessage("\nObject must be an alignment.\n");
                 opt.AddAllowedClass(typeof(Alignment), false);
                 ObjectId alignID = ed.GetEntity(opt).ObjectId;
-                Alignment myAlignment = ts.GetObject(alignID, OpenMode.ForRead) as Alignment;
-                
+                Alignment myAlignment = ts.GetObject(alignID, OpenMode.ForRead) as Alignment;               
                 ObjectIdCollection sampleLineIdCollection = myAlignment.GetSampleLineGroupIds();
-
                 SampleLineGroup sampleLineGroup = sampleLineIdCollection[0].GetObject(OpenMode.ForRead) as SampleLineGroup;
-
                 SectionViewGroupCollection sectionViewGrouopColection = sampleLineGroup.SectionViewGroups;
-
                 SectionViewGroup theSectionViewGroup = sectionViewGrouopColection[6];
-
                 ObjectIdCollection sectionViewIdColection = theSectionViewGroup.GetSectionViewIds();
 
                 foreach (ObjectId sectionViewId in sectionViewIdColection)
                 {
                     SectionView theSectionView = ts.GetObject(sectionViewId, OpenMode.ForRead) as SectionView;
+
+                    string minRangeElevation = theSectionView.ElevationMin.ToString();
                     SectionViewProfileGradePointCollection sectionViewPointCollection = theSectionView.ProfileGradePoints;
                     Point3d theLocation = theSectionView.Location;
 
+                    double baseElevation = MillingDataEngine.Func.SectionViews.ElevationOfLocationPoint(theSectionView.ElevationMin);
 
-
-                    ed.WriteMessage("\nSV {0}, X: {1}, Y: {2}", theSectionView.Name, theLocation.X, theLocation.Y);
-
+                    resultForFile.Add("Name " + theSectionView.Name +
+                        "\tX: " + theLocation.X +
+                        "\tY: " + theLocation.Y +
+                        "\tminElev: " + minRangeElevation +
+                        "\t\tBasePointElevation: " + baseElevation);
                 }
+            }
+            
+            ed.WriteMessage("\nOK!");
 
-                ed.WriteMessage("\nTest end!");
+            // write information to txt file for debuging
+            using (StreamWriter outputFile = new StreamWriter(@"D:\Trash\_Dev\AcadMilling\trunk\ResultFile.txt"))
+            {
+                foreach (string line in resultForFile)
+                    outputFile.WriteLine(line);
             }
         }
     }
