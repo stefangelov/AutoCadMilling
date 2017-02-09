@@ -1,4 +1,4 @@
-Requirements: AutoCad v 2016
+Requirements: AutoCad or AutoCad Civil 3D v 2016
 
 This is AutoCad plugin that convert excel file with data of existing 
 and project elevations of pavement in drawing of milling depth of 
