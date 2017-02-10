@@ -40,7 +40,7 @@ namespace MillingDataEngine.Func
                 {
                     var tempVariable = (range.Cells[i + 3, j + 1] as Excel.Range).Value;
 
-                    if (tempVariable == null) // chech for empty rows in the end of doc
+                    if (tempVariable == null) // if temp variable is null == end of document
                     {
                         row = i;
                         break;
