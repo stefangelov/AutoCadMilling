@@ -6,15 +6,16 @@ OK  # Process Input Data and Convert It To Milling Element;
 OK		# Function to calculatin Milling Element Width;
 		# Upgrade upper Function to return milling elements when master element through several ranges;
 
-	# Add Station Label as ProfilNameLabel;
+OK	# Add Station Label as ProfilNameLabel;
 	# UI in ACad commandline;
 OK	# Find how to propose to User to select Him Excel File;
 		if find upper
 	OK	# Change Function that open the Excel file to take one argument -> file path to chosen from User Excel file;
 
-	# Class for Cross-section. 
-		# Hold all milling elements for whole cross section;
-		# Find slopes of pavement in left and right;
+OK	# Class for Cross-section. 
+	OK	# Hold all milling elements for whole cross section;
+	OK	# Find slopes of pavement in left and right;
 
-	# Class for hole road
+OK	# Class for hole road
+		# do Draw() to work with RoadSecton DataStruct.
 	# Use upper thow Classes to do hole work

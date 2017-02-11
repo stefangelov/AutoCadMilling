@@ -4,18 +4,19 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Colors;
 using System;
+using MillingDataEngine.DataStruct;
 
 namespace MillingDataEngine.Func
 {
     public class DrawMillingElements
     {
-        public static void Drow(MillingDataEngine.DataStruct.MillingElement[] allTestElements, Transaction acTrans, BlockTableRecord acBlkTblRec, Database acCurDb)
+        public static void Drow(MillingDataEngine.DataStruct.MillingElement[] allMillingElements, Transaction acTrans, BlockTableRecord acBlkTblRec, Database acCurDb)
         {
             string tempProfileName = ""; //hold name of Profile to chech if we pass to different profile
-            string tempMillingElementProfilName = allTestElements[0].ProfileName;
+            string tempMillingElementProfilName = allMillingElements[0].ProfileName;
             int millingElementIndex = 0;
-            int millingElementAllIndexes = allTestElements.Length;
-            foreach (var millingElement in allTestElements)
+            int millingElementAllIndexes = allMillingElements.Length;
+            foreach (var millingElement in allMillingElements)
             {
                 // add lebel for name
                 // add label for station
@@ -33,7 +34,7 @@ namespace MillingDataEngine.Func
                 // add miling depth on end of cross section
                 if (millingElement.ProfileName != tempMillingElementProfilName || millingElementIndex == millingElementAllIndexes - 1)
                 {
-                    LabelingMillingEndDepth(allTestElements[millingElementIndex - 1], acTrans, acBlkTblRec, acCurDb);
+                    LabelingMillingEndDepth(allMillingElements[millingElementIndex - 1], acTrans, acBlkTblRec, acCurDb);
                     tempMillingElementProfilName = millingElement.ProfileName;
                 }
 

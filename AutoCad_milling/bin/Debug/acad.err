@@ -16,3 +16,15 @@ FATAL ERROR:  Unhandled Access Violation Reading 0x0000 Exception at 96f49d63h
 
 02/02/2017 at 15:25:21.041  Drawing: D:\POSHTA\Jeni\Test_C3D_DWG.dwg
 -------------
+
+
+FATAL ERROR:  Unhandled Access Violation Reading 0x0000 Exception at 67a2f323h
+
+02/11/2017 at 13:06:14.877  Drawing: Drawing1.dwg
+-------------
+
+
+FATAL ERROR:  Unhandled Access Violation Reading 0x0000 Exception at 67a4e073h
+
+02/11/2017 at 13:07:27.681  Drawing: Drawing1.dwg
+-------------

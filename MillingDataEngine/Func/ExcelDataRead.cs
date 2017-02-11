@@ -116,7 +116,7 @@ namespace MillingDataEngine.Func
                 double existEndLevel = Convert.ToDouble(singleRow[i+1]);
                 double projEndLevel = Convert.ToDouble(singleRow[i+6]);
 
-                double elementStart = elementWidth * (i - 2);
+                double elementStart = elementWidth * (i - 2) * (-1);
 
                 List<DataStruct.MillingElement>  tempListMillingElems = ConvertToMillingElemets(existStartLevel, projStartLevel,
                     existEndLevel, projEndLevel, elementWidth, projLayerThick, station, 

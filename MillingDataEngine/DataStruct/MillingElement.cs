@@ -90,13 +90,13 @@ namespace MillingDataEngine.DataStruct
         // set start point
         private void SetStartPoint()
         {
-            StartPoint = new ThreeDPoint((Station + refStart) * scaleX, (LineStart + refStart) * scaleY);
+            StartPoint = new ThreeDPoint((Station + refStart) * scaleX, (LineStart - refStart) * scaleY);
         }
 
         // set end point
         private void SetEndPoint()
         {
-            EndPoint = new ThreeDPoint((Station + refStart) * scaleX, (LineStart + LineLength + refStart) * scaleY);
+            EndPoint = new ThreeDPoint((Station + refStart) * scaleX, (LineStart - LineLength - refStart) * scaleY);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace MillingTestPrgm
         [STAThread]
         static void Main(string[] args)
         {
-            double baseElevation = MillingDataEngine.Func.SectionViews.ElevationOfLocationPoint(1192.29915019433);
-            Console.WriteLine(baseElevation);
+            //double baseElevation = MillingDataEngine.Func.SectionViews.ElevationOfLocationPoint(1192.29915019433);
+            //Console.WriteLine(baseElevation);
 
             //string[,] excelDataVariable = MillingDataEngine.Func.ExcelDataRead.ReadData();
 
