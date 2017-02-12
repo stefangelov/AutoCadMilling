@@ -19,3 +19,7 @@ OK	# Class for Cross-section.
 OK	# Class for hole road
 		# do Draw() to work with RoadSecton DataStruct.
 	# Use upper thow Classes to do hole work
+
+	# Remove auto calculating of start and edn position of milling elements.
+	# Add function to calculate start and end position of each milling element according to for what we will
+	  use it (milling diagram or milling depth to section profile view). If is necessary the functions can be tow.
