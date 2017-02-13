@@ -108,13 +108,13 @@ namespace AutoCad_milling
                     SectionViewProfileGradePointCollection sectionViewPointCollection = theSectionView.ProfileGradePoints;
                     Point3d theLocation = theSectionView.Location;
 
-                    //double baseElevation = MillingDataEngine.Func.SectionViews.ElevationOfLocationPoint(theSectionView.ElevationMin);
+                    double baseElevation = MillingDataEngine.Func.SectionViews.ElevationOfLocationPoint(theSectionView.ElevationMin);
 
                     resultForFile.Add("Name " + theSectionView.Name +
                         "\tX: " + theLocation.X +
                         "\tY: " + theLocation.Y +
                         "\tminElev: " + minRangeElevation +
-                        "\t\tBasePointElevation: " /* + baseElevation*/);
+                        "\t\tBasePointElevation: " + baseElevation);
                 }
             }
             
