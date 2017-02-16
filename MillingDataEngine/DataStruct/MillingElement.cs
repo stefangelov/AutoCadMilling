@@ -18,7 +18,7 @@ namespace MillingDataEngine.DataStruct
         private static double[] millingRange_2 = {3d, 5d};
         private static double [] millingRange_3 = {5d, 7d};
 
-        private double refStart = 10;
+        private double refStart = -50;
 
 
         // posible name of layers

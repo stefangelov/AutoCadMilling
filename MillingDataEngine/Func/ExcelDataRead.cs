@@ -64,7 +64,6 @@ namespace MillingDataEngine.Func
                     excelDataVariable[i, j] = tempExcelDataVariable[i, j];
                 }
             }
-
             return excelDataVariable;
         }
 
@@ -89,7 +88,6 @@ namespace MillingDataEngine.Func
                 DataStruct.Cross_section elementsFromSingleRow = ExtractMillingElementsFromSingleRow(singleRow);
                 roadSection.AddCross(elementsFromSingleRow);
             }
-
             return roadSection;
         }
 
@@ -245,11 +243,6 @@ namespace MillingDataEngine.Func
                 endMillingRange = new double[] { -100, firstPosibleRange[0] };
             }
 
-            if (profilName == "687")
-            {
-                Console.WriteLine();
-            }
-
             // check if there is MILLING
             if (startMillingDepth > firstPosibleRange[0] || endMillingDepth > firstPosibleRange[0])
             {
@@ -263,17 +256,17 @@ namespace MillingDataEngine.Func
                         double[] firstSecondMillingLength = CalcultaFirstSecondMillingLength(elementWidth, startMillingDepth, endMillingDepth, startMillingRange[1], endMillingRange[0]);
                         double unneMillingElementLength = firstSecondMillingLength[0];
                         
-                        double neMillingElementStart = elementStart + unneMillingElementLength;
+                        double neMillingElementStart = elementStart - unneMillingElementLength;
                         double neMillingLength = firstSecondMillingLength[1];
 
-                        listToReturnDifRanges.Add(new DataStruct.MillingElement(station, profilName, neMillingElementStart, neMillingLength, firstPosibleRange[0], endMillingDepth)); //endMillingRange[1]
+                        listToReturnDifRanges.Add(new DataStruct.MillingElement(station, profilName, neMillingElementStart, neMillingLength, firstPosibleRange[0], endMillingDepth));
                     }
                     else
                     {
                         double[] firstSecondMillingLength = CalcultaFirstSecondMillingLength(elementWidth, startMillingDepth, endMillingDepth, startMillingRange[1], endMillingRange[0]);
                         listToReturnDifRanges.Add(new DataStruct.MillingElement(station, profilName, elementStart, firstSecondMillingLength[0], startMillingDepth, startMillingRange[0]));
 
-                        double secondElementStart = elementStart + firstSecondMillingLength[0];
+                        double secondElementStart = elementStart - firstSecondMillingLength[0];
                         listToReturnDifRanges.Add(new DataStruct.MillingElement(station, profilName, secondElementStart, firstSecondMillingLength[1], startMillingRange[0], endMillingDepth));  
                     }
                 }
@@ -293,7 +286,7 @@ namespace MillingDataEngine.Func
                         double[] firstSecondMillingLength = CalcultaFirstSecondMillingLength(elementWidth, startMillingDepth, endMillingDepth, startMillingRange[1], endMillingRange[0]);
                         listToReturnDifRanges.Add(new DataStruct.MillingElement(station, profilName, elementStart, firstSecondMillingLength[0], startMillingDepth, startMillingRange[1]));
 
-                        double secondElementStart = elementStart + firstSecondMillingLength[0];
+                        double secondElementStart = elementStart - firstSecondMillingLength[0];
                         listToReturnDifRanges.Add(new DataStruct.MillingElement(station, profilName, secondElementStart, firstSecondMillingLength[1], startMillingRange[1], endMillingDepth));
                     }
                 }

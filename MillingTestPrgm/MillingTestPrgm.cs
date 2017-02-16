@@ -9,38 +9,38 @@ namespace MillingTestPrgm
         [STAThread]
         static void Main(string[] args)
         {
-            double baseElevation = MillingDataEngine.Func.SectionViews.ElevationOfLocationPoint(1192.29915019433);
-            Console.WriteLine(baseElevation);
+            //double baseElevation = MillingDataEngine.Func.SectionViews.ElevationOfLocationPoint(1192.29915019433);
+            //Console.WriteLine(baseElevation);
 
-            //string[,] excelDataVariable = MillingDataEngine.Func.ExcelDataRead.ReadData();
+            string[,] exceldatavariable = MillingDataEngine.Func.ExcelDataRead.ReadData();
 
-            //List<MillingDataEngine.DataStruct.Cross_section> theCrossSection = MillingDataEngine.Func.ExcelDataRead.RoadSectionElementsBuilder(excelDataVariable).CrossSections;
-            //List<MillingDataEngine.DataStruct.MillingElement> readyMillingElements = new List<MillingDataEngine.DataStruct.MillingElement>();
-            //foreach (var cross in theCrossSection)
-            //{
-            //    foreach (var item in cross.MillingElements)
-            //    {
-            //        readyMillingElements.Add(item);
-            //    }
-               
-            //}
-            //Console.WriteLine("Done!");
+            List<MillingDataEngine.DataStruct.Cross_section> thecrosssection = MillingDataEngine.Func.ExcelDataRead.RoadSectionElementsBuilder(exceldatavariable).CrossSections;
+            List<MillingDataEngine.DataStruct.MillingElement> readymillingelements = new List<MillingDataEngine.DataStruct.MillingElement>();
+            foreach (var cross in thecrosssection)
+            {
+                foreach (var item in cross.MillingElements)
+                {
+                    readymillingelements.Add(item);
+                }
 
-            //int tempCounter = 0;
+            }
+            Console.WriteLine("done!");
 
-            //foreach (var item in readyMillingElements)
-            //{
-            //    if (tempCounter % 10 == 0)
-            //    {
-            //        Console.WriteLine();
-            //    }
-            //    Console.WriteLine("Station {0}, Point {1}, Layer: {2}", item.Station, item.ProfileName, item.LayerName);
-            //    Console.WriteLine("Start point: {0} - {1}", item.StartPoint.CoordinateX, item.StartPoint.CoordinateY);
-            //    Console.WriteLine("End point: {0} - {1}", item.EndPoint.CoordinateX, item.EndPoint.CoordinateY);
-            //    Console.WriteLine();
+            int tempcounter = 0;
 
-            //    tempCounter++;
-            //}
+            foreach (var item in readymillingelements)
+            {
+                if (tempcounter % 10 == 0)
+                {
+                    Console.WriteLine();
+                }
+                Console.WriteLine("station {0}, point {1}, layer: {2}", item.Station, item.ProfileName, item.LayerName);
+                Console.WriteLine("start point: {0} - {1}", item.StartPoint.CoordinateX, item.StartPoint.CoordinateY);
+                Console.WriteLine("end point: {0} - {1}", item.EndPoint.CoordinateX, item.EndPoint.CoordinateY);
+                Console.WriteLine();
+                             
+                tempcounter++;
+            }
         }
     }
 }
