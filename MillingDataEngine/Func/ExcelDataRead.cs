@@ -97,6 +97,12 @@ namespace MillingDataEngine.Func
 
             int rowLength = singleRow.GetLength(0);
             double station = Convert.ToDouble(singleRow[0]);
+
+            if (station == 69020)
+            {
+                Console.WriteLine();
+            }
+
             string profilName = singleRow[1];
             int iterationEnd = (rowLength - 4) / 2 + 2 - 1;
             double crossSectionWidth = Convert.ToDouble(singleRow[rowLength - 2]);
@@ -278,7 +284,7 @@ namespace MillingDataEngine.Func
                     {
                         double[] neMillingLength = CalcultaFirstSecondMillingLength(elementWidth, startMillingDepth, endMillingDepth, startMillingRange[1], endMillingRange[0]);
                         
-                        listToReturnDifRanges.Add(new DataStruct.MillingElement(station, profilName, elementStart + neMillingLength[0], neMillingLength[1], firstPosibleRange[0], endMillingDepth));
+                        listToReturnDifRanges.Add(new DataStruct.MillingElement(station, profilName, elementStart - neMillingLength[0], neMillingLength[1], firstPosibleRange[0], endMillingDepth));
                     }
 
                     else
