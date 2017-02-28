@@ -55,9 +55,9 @@ namespace MillingDataEngine.Func
             xlWorkBook.Close(0);
             xlApp.Quit();
 
-            string [,] excelDataVariable = new string [row, col];
+            string [,] excelDataVariable = new string [row - 2, col];
 
-            for (int i = 0; i < row; i++)
+            for (int i = 0; i < row - 2; i++)
             {
                 for (int j = 0; j < col; j++)
                 {

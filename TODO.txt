@@ -17,5 +17,8 @@ OK	# Class for Cross-section.
 	OK	# Find slopes of pavement in left and right;
 
 OK	# Class for hole road
-		# do Draw() to work with RoadSecton DataStruct.
+	OK	# do Draw() to work with RoadSecton DataStruct.
 	# Use upper thow Classes to do hole work
+
+	# Add labels for width of each milling range depth in each cross section like as the forlage.
+			Can calculate and hold the data in Cross-Section class.
