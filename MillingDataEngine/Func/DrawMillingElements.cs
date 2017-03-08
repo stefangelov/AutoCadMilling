@@ -5,6 +5,7 @@ using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Colors;
 using System;
 using MillingDataEngine.DataStruct;
+using System.Linq;
 
 namespace MillingDataEngine.Func
 {
@@ -12,6 +13,7 @@ namespace MillingDataEngine.Func
     {
         public static void Drow(MillingDataEngine.DataStruct.MillingElement[] allMillingElements, Transaction acTrans, BlockTableRecord acBlkTblRec, Database acCurDb)
         {
+            
             string tempProfileName = ""; //hold name of Profile to chech if we pass to different profile
             string tempMillingElementProfilName = allMillingElements[0].ProfileName;
             int millingElementIndex = 0;
@@ -144,6 +146,30 @@ namespace MillingDataEngine.Func
             acText.Height = 0.5;
 
             string stringToPut = millingElement.Station.ToString();
+
+            if (stringToPut.Contains('.'))
+            {
+                int stringLength = stringToPut.Length;
+                int positionOfDecimal = stringToPut.IndexOf('.');
+                string afterDecimal = stringToPut.Substring(positionOfDecimal);
+                stringToPut = AddPlusToStation(stringToPut.Substring(0, positionOfDecimal)) + afterDecimal;
+            }
+
+            else
+            {
+                stringToPut = AddPlusToStation(stringToPut);
+                stringToPut = stringToPut + ".00";
+            }
+
+            acText.TextString = stringToPut;
+
+            // add text to block table and transaction
+            acBlkTblRec.AppendEntity(acText);
+            acTrans.AddNewlyCreatedDBObject(acText, true);
+        }
+
+        private static string AddPlusToStation(string stringToPut)
+        {
             int stringToPutLength = stringToPut.Length;
             if (stringToPutLength > 3)
             {
@@ -168,11 +194,7 @@ namespace MillingDataEngine.Func
                 }
             }
 
-            acText.TextString = stringToPut;
-
-            // add text to block table and transaction
-            acBlkTblRec.AppendEntity(acText);
-            acTrans.AddNewlyCreatedDBObject(acText, true);
+            return stringToPut;
         }
 
         // labeling milling depth on crossectons
