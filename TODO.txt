@@ -1,24 +1,18 @@
-OK    # ADD Autodesk lib as local copy to project;	
-OK  # Excel Read Input Data - (Private event);
-OK  # Process Input Data and Convert It To Milling Element;
+	# Need to be optimized
+		# the changing of coordinates in Cross-section-for-sectionViews.cs;
+		# the searching of mid point of cross section in Cross-section.cs;
 	
-	# Process Input Data and Convert It To Milling Element (when is in diferent ranges);
-OK		# Function to calculatin Milling Element Width;
-		# Upgrade upper Function to return milling elements when master element through several ranges;
+	# Add function to create Xcel file that hold milling quantites;
 
-OK	# Add Station Label as ProfilNameLabel;
-	# UI in ACad commandline;
-OK	# Find how to propose to User to select Him Excel File;
-		if find upper
-	OK	# Change Function that open the Excel file to take one argument -> file path to chosen from User Excel file;
+	# Add construction in ExcelDataReader.cs that allows mistakes during open the Excel data file;
 
-OK	# Class for Cross-section. 
-	OK	# Hold all milling elements for whole cross section;
-	OK	# Find slopes of pavement in left and right;
+	# Add function that check if data in the Excel data file is correct
+		# If there is any problems create log.txt file that hold station and names of problem sections;
+		# Hold information abaut what is the problem;
+		# If there is errors puted in log.txt -> open log.txt file;
 
-OK	# Class for hole road
-	OK	# do Draw() to work with RoadSecton DataStruct.
-	# Use upper thow Classes to do hole work
+	# Remove everything needed for debugging like if(){CW();} ;
 
-	# Add labels for width of each milling range depth in each cross section like as the forlage.
-			Can calculate and hold the data in Cross-Section class.
+	# Remove local copies of all autodesk libs;
+
+	# Make new ReadMe.txt proper file for both autocad functions;

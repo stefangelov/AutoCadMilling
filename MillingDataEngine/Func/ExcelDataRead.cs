@@ -92,7 +92,7 @@ namespace MillingDataEngine.Func
             string profilName = singleRow[1];
 
             //for debuging
-            if (profilName == "734")
+            if (profilName == "205")
             {
                 Console.WriteLine();
             }
@@ -141,6 +141,7 @@ namespace MillingDataEngine.Func
             // Element to return
             DataStruct.Cross_section tempCrossSection = new DataStruct.Cross_section(profilName, station, leftEdgeProjectLevel,
                 rightProjectLevel, midProjectLevel, crossSectionWidth, singleRowMillingElements);
+            tempCrossSection.ProjLayerThick = projLayerThick;
 
             return tempCrossSection;
         }
@@ -194,6 +195,7 @@ namespace MillingDataEngine.Func
                         {
                             if (item != null)
                             {
+
                                 listToReturn.Add(item);
                             }
                         }
@@ -310,7 +312,7 @@ namespace MillingDataEngine.Func
                         {
                             double tempEndMillingDepth = theMillingRanges[rangeCounter][1];
                             double tempStartMilingDepth = startMillingDepth;
-                            double tempMillingLength = findMillingLenght(tempStartMilingDepth, tempEndMillingDepth, startMillingDepth);
+                            double tempMillingLength = findMillingLenght(tempStartMilingDepth, tempEndMillingDepth, multiplier);
                             theListToReturn.Add(new DataStruct.MillingElement(station, profilName, elementStart, tempMillingLength, tempStartMilingDepth, tempEndMillingDepth));
                             double tempElementStart = elementStart - tempMillingLength;
                             double tempElementWidth = elementWidth - tempMillingLength;

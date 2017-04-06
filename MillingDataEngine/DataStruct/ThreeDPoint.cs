@@ -8,7 +8,7 @@ namespace MillingDataEngine.DataStruct
 {
     public class ThreeDPoint
     {
-        public ThreeDPoint(double x, double y, double z = 0)
+        public ThreeDPoint(double x, double y, int z = 0)
         {
             CoordinateX = x;
             CoordinateY = y;

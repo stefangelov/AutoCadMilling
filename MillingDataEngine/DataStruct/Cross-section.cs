@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using MillingDataEngine.DataStruct;
+using System.Linq;
+using System;
 
 
 namespace MillingDataEngine.DataStruct
@@ -7,18 +10,34 @@ namespace MillingDataEngine.DataStruct
     {
         public Cross_section(string name, double station, 
             double leftEdgeElev, double rightEdgeElev, double midElev, 
-            double width, List<MillingElement> millingElements)
+            double width, List<MillingElement> millingElements, bool isToSectionView = false, ThreeDPoint midPointOfCrossSection = null)
         {
-            SlopeLeft = (midElev - leftEdgeElev) / width / 2;
-            SlopeRight = (midElev - rightEdgeElev) / width / 2;
             DeltaLevelLeft = midElev - leftEdgeElev;
             DeltaLevelRight = midElev - rightEdgeElev;
+            SlopeLeft = (DeltaLevelLeft) / (width / 2);
+            SlopeRight = (DeltaLevelRight) / (width / 2);
             Width = width;
             MillingElements = millingElements;
             Name = name;
+            LeftEdgeElevation = leftEdgeElev;
+            RightEdgeElevation = rightEdgeElev;
 
-            ChangeStartEndPointForTheDiagram();
+            MidPoint_Elevation = midElev;
+            
+            if (!isToSectionView)
+            {
+                ChangeStartEndPointForTheDiagram();
+            }
+            if (midPointOfCrossSection != null)
+            {
+                MidPointOfCrossSection = midPointOfCrossSection;
+            }
         }
+
+
+        public double ProjLayerThick { get; set; }
+        public double LeftEdgeElevation { get; private set; }
+        public double RightEdgeElevation { get; private set; }
         public List<MillingElement> MillingElements { get; private set; }
         public double Width { get; private set; }
         public double SlopeLeft { get; private set; }
@@ -27,6 +46,31 @@ namespace MillingDataEngine.DataStruct
         public double Station { get; private set; }
         public double DeltaLevelLeft { get; private set; }
         public double DeltaLevelRight { get; private set; }
+        public List<MIllingQuantity> MillingQuantity { get { return CalcMillingQuantities(); } }
+        public ThreeDPoint MidPointOfCrossSection { get; private set; }
+        public double MidPoint_Elevation { get; private set; }
+
+        private List<MIllingQuantity> CalcMillingQuantities()
+        {
+            List<MIllingQuantity> quantityForReturning = new List<MIllingQuantity>();
+           
+            int countOfAllMillingElements = MillingElements.Count;
+            quantityForReturning.Add(new MIllingQuantity(MillingElements[0].RangeScope, MillingElements[0].LineLength, MillingElements[0].LayerName));
+
+            for (int i = 1; i < countOfAllMillingElements; i++)
+            {
+                if (quantityForReturning.Exists(x => x.Range == MillingElements[i].RangeScope))
+                {
+                    quantityForReturning.Find(x => x.Range == MillingElements[i].RangeScope).Quant += MillingElements[i].LineLength;
+                }
+                else
+                {
+                    quantityForReturning.Add(new MIllingQuantity(MillingElements[i].RangeScope, MillingElements[i].LineLength, MillingElements[i].LayerName));
+                }
+            }
+            List<MIllingQuantity> sortedQuantList = quantityForReturning.OrderByDescending(x => x.Range[0]).ToList();
+            return sortedQuantList;
+        }
 
         private void ChangeStartEndPointForTheDiagram()
         { 
@@ -38,7 +82,8 @@ namespace MillingDataEngine.DataStruct
                 singleElement.EndPoint.CoordinateY = singleElement.EndPoint.CoordinateY + Width / 2;
             }
             // find mid point
-            ThreeDPoint midPointOfCrossSection = FindMidPoint();
+            MidPointOfCrossSection = FindMidPoint();
+            ThreeDPoint midPointOfCrossSection = MidPointOfCrossSection;
             // change X coordinate of each start and end point to correspond to slope
             foreach (MillingElement singleElement in MillingElements)
             {
@@ -70,10 +115,13 @@ namespace MillingDataEngine.DataStruct
         // find mid point of cross section
         private ThreeDPoint FindMidPoint()
         {
+            double midX;
+            double midY;
             if (MillingElements.Count > 0)
             {
-                double midX = MillingElements[0].StartPoint.CoordinateX;
-                double midY = (MillingElements[0].StartPoint.CoordinateY + MillingElements[MillingElements.Count - 1].EndPoint.CoordinateY) / 2;
+                midY = Math.Abs(MillingElements[0].RefStart);
+                //midY = (MillingElements[0].StartPoint.CoordinateY + MillingElements[MillingElements.Count - 1].EndPoint.CoordinateY) / 2;
+                midX = MillingElements[0].StartPoint.CoordinateX;
                 ThreeDPoint midPoint = new ThreeDPoint(midX, midY);
                 return midPoint;
             }

@@ -61,8 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStruct\AcadSectionView_Extend.cs" />
+    <Compile Include="DataStruct\Cross-section-for-sectionView.cs" />
     <Compile Include="DataStruct\Cross-section.cs" />
     <Compile Include="DataStruct\MillingElement.cs" />
+    <Compile Include="DataStruct\MIllingQuantity.cs" />
     <Compile Include="DataStruct\RoadSection.cs" />
     <Compile Include="DataStruct\ThreeDPoint.cs" />
     <Compile Include="Func\DrawMillingElements.cs" />

@@ -28,3 +28,21 @@ FATAL ERROR:  Unhandled Access Violation Reading 0x0000 Exception at 67a4e073h
 
 02/11/2017 at 13:07:27.681  Drawing: Drawing1.dwg
 -------------
+
+
+FATAL ERROR:  Unhandled Access Violation Reading 0x0000 Exception at 96ea2b72h
+
+03/15/2017 at 15:44:51.498  Drawing: Drawing1.dwg
+-------------
+
+
+FATAL ERROR:  Unhandled Access Violation Reading 0x0000 Exception at 96e93902h
+
+03/15/2017 at 15:56:09.825  Drawing: Drawing1.dwg
+-------------
+
+
+FATAL ERROR:  Unhandled Access Violation Reading 0x0000 Exception at 96e78b92h
+
+03/15/2017 at 15:58:45.405  Drawing: Drawing1.dwg
+-------------

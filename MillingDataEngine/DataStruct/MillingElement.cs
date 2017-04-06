@@ -17,6 +17,9 @@ namespace MillingDataEngine.DataStruct
         private static double [] millingRange_1 = {0d, 3d};
         private static double[] millingRange_2 = {3d, 5d};
         private static double [] millingRange_3 = {5d, 7d};
+        private static double[] millingRange_h7 = { 7d, -1d };
+
+        private double[] rangeScope;
 
         private double refStart = -50;
 
@@ -26,6 +29,10 @@ namespace MillingDataEngine.DataStruct
         
         public MillingElement(double station, string profileName, double lineStart, double lineLength, double startMillingDepth, double endMillingDepth)
         {
+            if (profileName == "206")
+            {
+                Console.WriteLine();
+            }
             Station = station;
             LineStart = lineStart;
             LineLength = lineLength;
@@ -51,6 +58,8 @@ namespace MillingDataEngine.DataStruct
         public static double[] MillingRange_2 { get { return millingRange_2; } }
         public static double[] MillingRange_3 { get { return millingRange_3; } }
         public static double[][] MillingRanges { get { return new double[][] { millingRange_1, millingRange_2, millingRange_3 }; } } //return all milling ranges
+        public double[] RangeScope { get { return rangeScope; } }
+        public double RefStart { get { return refStart; } }
 
         //set layer name
         private void SetLayerName(double startMilling, double endMilling)
@@ -59,24 +68,29 @@ namespace MillingDataEngine.DataStruct
             if (millingAverage >= millingRange_1[0] && millingAverage < millingRange_1[1]) // see if first statement is bether with '>='
             {
                 LayerName = layerNames[0];
+                rangeScope = MillingRange_1;
             }
             else
             {
                 if (millingAverage >= millingRange_2[0] && millingAverage < millingRange_2[1])
                 {
                     LayerName = layerNames[1];
+                    rangeScope = MillingRange_2;                    
                 }
                 else
                 {
                     if (millingAverage >= millingRange_3[0] && millingAverage < millingRange_3[1])
                     {
                         LayerName = layerNames[2];
+                        rangeScope = MillingRange_3;
+                        
                     }
                     else
                     {
                         if (millingAverage >= millingRange_3[1])
                         {
                             LayerName = layerNames[3];
+                            rangeScope = millingRange_h7;
                         }
                         else
                         {

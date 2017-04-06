@@ -18,29 +18,20 @@ namespace MillingTestPrgm
             List<MillingDataEngine.DataStruct.MillingElement> readymillingelements = new List<MillingDataEngine.DataStruct.MillingElement>();
             foreach (var cross in thecrosssection)
             {
-                foreach (var item in cross.MillingElements)
+                if (cross.MillingElements.Count > 0)
                 {
-                    readymillingelements.Add(item);
+                    Console.WriteLine("station {0}, Nmae: {1}", cross.MillingElements[0].Station, cross.MillingElements[0].ProfileName);
+                    foreach (var quont in cross.MillingQuantity)
+                    {
+                        string forPrint = (quont.Range[1]) > 0 ? 
+                            String.Format("\tRange {0}-{1}  Q:{2}", quont.Range[0], quont.Range[1], quont.Quant) : 
+                            String.Format("\tRange >{0}  Q:{1}", quont.Range[0], quont.Quant);
+                        Console.WriteLine(forPrint);
+                    }
                 }
-
+            
             }
-            Console.WriteLine("done!");
-
-            int tempcounter = 0;
-
-            foreach (var item in readymillingelements)
-            {
-                if (tempcounter % 10 == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.WriteLine("station {0}, point {1}, layer: {2}", item.Station, item.ProfileName, item.LayerName);
-                Console.WriteLine("start point: {0} - {1}", item.StartPoint.CoordinateX, item.StartPoint.CoordinateY);
-                Console.WriteLine("end point: {0} - {1}", item.EndPoint.CoordinateX, item.EndPoint.CoordinateY);
-                Console.WriteLine();
-                             
-                tempcounter++;
-            }
+                Console.WriteLine("done!");
         }
     }
 }
