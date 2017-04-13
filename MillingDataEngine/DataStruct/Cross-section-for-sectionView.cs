@@ -25,10 +25,6 @@ namespace MillingDataEngine.DataStruct
         public double InsertPoint_Elevation { get; private set; }
         private void MoveCrossSectionToSectionView()
         {
-            if (Name == "205")
-            {
-                Console.WriteLine();
-            }
             double deltaX = InsertPoint_Location.CoordinateX - MidPointOfCrossSection.CoordinateX;
             double deltaY = InsertPoint_Location.CoordinateY - MidPointOfCrossSection.CoordinateY;
             double deltaElevation = MidPoint_Elevation - InsertPoint_Elevation;

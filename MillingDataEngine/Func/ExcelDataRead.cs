@@ -31,12 +31,13 @@ namespace MillingDataEngine.Func
             int row = range.Rows.Count;
             int col = 14; // this is the number of colums in our case
 
-            string[,] tempExcelDataVariable = new string[row - 2, col];
+            string[,] tempExcelDataVariable = new string[row - 2, col + 1];
 
 
             for (int i = 0; i < row - 2; i++)
             {
-                for (int j = 0; j < col; j++)
+                int j = 0;
+                for (; j < col; j++)
                 {
                     var tempVariable = (range.Cells[i + 3, j + 1] as Excel.Range).Value;
 
@@ -50,6 +51,8 @@ namespace MillingDataEngine.Func
                         tempExcelDataVariable[i, j] = "" + tempVariable;
                     }
                 }
+                var tempVarSecond = (range.Cells[i + 3, j + 2] as Excel.Range).Value;
+                tempExcelDataVariable[i, j] = "" + tempVarSecond;
             }
 
             xlWorkBook.Close(0);
@@ -65,17 +68,17 @@ namespace MillingDataEngine.Func
 
             // find dimensions of input arr
             int row = excelDataVariable.GetLength(0);
-            int col = excelDataVariable.GetLength(1);
+            int col = excelDataVariable.GetLength(1) - 1;
 
             for (int rows = 0; rows < row; rows++)
             {
-                string[] singleRow = new string[col]; //temp variable to hold single row of input data
-
-                for (int columns = 0; columns < col; columns++)
+                string[] singleRow = new string[col + 1]; //temp variable to hold single row of input data; + 1 because of min milling depth acordint to Geomechanic rec
+                int columns = 0;
+                for (; columns < col; columns++)
                 {
                     singleRow[columns] = excelDataVariable[rows, columns]; // extract single row from input data to temp variable
                 }
-
+                singleRow[columns] = excelDataVariable[rows, columns];
                 DataStruct.Cross_section elementsFromSingleRow = ExtractMillingElementsFromSingleRow(singleRow);
                 roadSection.AddCross(elementsFromSingleRow);
             }
@@ -86,21 +89,16 @@ namespace MillingDataEngine.Func
         {
             List<DataStruct.MillingElement> singleRowMillingElements = new List<DataStruct.MillingElement>();
 
-            int rowLength = singleRow.GetLength(0);
+            int rowLength = singleRow.GetLength(0) - 1; // - 1 to use old code and take min milling depth from geomechanic
             double station = Convert.ToDouble(singleRow[0]);
 
             string profilName = singleRow[1];
-
-            //for debuging
-            if (profilName == "205")
-            {
-                Console.WriteLine();
-            }
 
             int iterationEnd = (rowLength - 4) / 2 + 2 - 1;
             double crossSectionWidth = Convert.ToDouble(singleRow[rowLength - 2]);
             double elementWidth = crossSectionWidth / (iterationEnd - 2); // distance between two points wiht elevation
             double projLayerThick = Convert.ToDouble(singleRow[rowLength - 1]); // Thickness of project asphalt layers
+            double allowableMinMillingDepth = Convert.ToDouble(singleRow[rowLength]); // Min alloable milling depth according to geomechanic
 
             double leftEdgeProjectLevel = 0;
             double midProjectLevel = 0;
@@ -108,16 +106,20 @@ namespace MillingDataEngine.Func
 
             for (int i = 2; i < iterationEnd; i++)
             {
-                double existStartLevel = Convert.ToDouble(singleRow[i]);
-                double projStartLevel = Convert.ToDouble(singleRow[i + 5]);
-                double existEndLevel = Convert.ToDouble(singleRow[i + 1]);
-                double projEndLevel = Convert.ToDouble(singleRow[i + 6]);
+                double existStartLevel;
+                double projStartLevel; 
+                double existEndLevel;
+                double projEndLevel;
+                existStartLevel = Convert.ToDouble(singleRow[i]);
+                projStartLevel = Convert.ToDouble(singleRow[i + 5]);
+                existEndLevel = Convert.ToDouble(singleRow[i + 1]);
+                projEndLevel = Convert.ToDouble(singleRow[i + 6]);
 
                 double elementStart = elementWidth * (i - 2) * (-1);
 
                 List<DataStruct.MillingElement> tempListMillingElems = ConvertToMillingElemets(existStartLevel, projStartLevel,
                     existEndLevel, projEndLevel, elementWidth, projLayerThick, station,
-                    profilName, elementStart);
+                    profilName, elementStart, allowableMinMillingDepth);
 
                 foreach (var item in tempListMillingElems)
                 {
@@ -146,15 +148,79 @@ namespace MillingDataEngine.Func
             return tempCrossSection;
         }
 
+        public static double FindNewMillingDepth(double alloableMinMillingDepth, double projLayerThick, double projLevelDiff)
+        {
+            double firstBinderCourseMin = 6;
+            double firstBinderCourseMax = 10;
+            double secondBinderCourseMin = 6;
+            double secondBinderCourseMax = 30;
+
+            double twoLayerUpLayer = 5;
+            double singleLayer = 6;
+
+            double millingDepth = 0;
+
+            if (projLayerThick < 11)
+            {
+                if ( (alloableMinMillingDepth + projLevelDiff) < (projLayerThick + firstBinderCourseMin) )
+                {
+                    millingDepth = (projLayerThick + firstBinderCourseMin) - projLevelDiff;
+                }
+                else
+                {
+                    if ( (alloableMinMillingDepth + projLevelDiff) < (projLayerThick + firstBinderCourseMin + secondBinderCourseMin))
+                    {
+                        millingDepth = (projLayerThick + firstBinderCourseMin + secondBinderCourseMin) - projLevelDiff;
+                    }
+                    else
+                    {
+                        millingDepth = alloableMinMillingDepth;
+                    }
+                }
+            }
+            else
+            {
+                if ( (alloableMinMillingDepth + projLevelDiff) < (projLayerThick + firstBinderCourseMax - firstBinderCourseMin) )
+                {
+                    millingDepth = alloableMinMillingDepth;
+                }
+                else
+                {
+                    if ( (alloableMinMillingDepth + projLevelDiff) < (projLayerThick + secondBinderCourseMin))
+                    {
+                        millingDepth = projLayerThick + secondBinderCourseMin - projLevelDiff;
+                    }
+                    else
+                    {
+                        millingDepth = alloableMinMillingDepth;
+                    }
+                }
+            }
+
+
+            return millingDepth;
+        }
+
         // convert secton of cross section to milling elements
         private static List<DataStruct.MillingElement> ConvertToMillingElemets(double existStartLevel, double projStartLevel,
             double existEndLevel, double projEndLevel, double elementWidth, double projLayerThick, double station,
-            string profilName, double elementStart)
+            string profilName, double elementStart, double allowableMinMillingDepth)
         {
             List<DataStruct.MillingElement> listToReturn = new List<DataStruct.MillingElement>();
 
             double startMillingDepth = (projStartLevel - projLayerThick / 100 - existStartLevel) * -100;
             double endMillingDepth = (projEndLevel - projLayerThick / 100 - existEndLevel) * -100;
+
+            if (startMillingDepth < allowableMinMillingDepth)
+            {
+                double projLevelDiff = (projStartLevel - existStartLevel) * 100;
+                startMillingDepth = FindNewMillingDepth(allowableMinMillingDepth, projLayerThick, projLevelDiff);
+            }
+            if (endMillingDepth < allowableMinMillingDepth)
+            {
+                double projLevelDiff = (projEndLevel - existEndLevel) * 100;
+                endMillingDepth = FindNewMillingDepth(allowableMinMillingDepth, projLayerThick, projLevelDiff);
+            }
 
             // hold is the milling elemen is in one range of milling depth
             bool areInOneRange = false;
