@@ -153,28 +153,37 @@ namespace MillingDataEngine.Func
             double firstBinderCourseMin = 6;
             double firstBinderCourseMax = 10;
             double secondBinderCourseMin = 6;
-            double secondBinderCourseMax = 30;
+            double secondBinderCourseMax = 20;
 
             double twoLayerUpLayer = 5;
             double singleLayer = 6;
+
+            double toleranceForMilling = 0.7; //if actual milling is 0.7 * alloableMinMillingDepth everything is OK
 
             double millingDepth = 0;
 
             if (projLayerThick < 11)
             {
-                if ( (alloableMinMillingDepth + projLevelDiff) < (projLayerThick + firstBinderCourseMin) )
+                if ((alloableMinMillingDepth * toleranceForMilling + projLevelDiff) < projLayerThick)
                 {
-                    millingDepth = (projLayerThick + firstBinderCourseMin) - projLevelDiff;
+                    millingDepth = projLayerThick - projLevelDiff;
                 }
                 else
                 {
-                    if ( (alloableMinMillingDepth + projLevelDiff) < (projLayerThick + firstBinderCourseMin + secondBinderCourseMin))
+                    if ((alloableMinMillingDepth + projLevelDiff) < (projLayerThick + firstBinderCourseMin))
                     {
-                        millingDepth = (projLayerThick + firstBinderCourseMin + secondBinderCourseMin) - projLevelDiff;
+                        millingDepth = (projLayerThick + firstBinderCourseMin) - projLevelDiff;
                     }
                     else
                     {
-                        millingDepth = alloableMinMillingDepth;
+                        if ((alloableMinMillingDepth + projLevelDiff) < (projLayerThick + firstBinderCourseMin + secondBinderCourseMin))
+                        {
+                            millingDepth = (projLayerThick + firstBinderCourseMin + secondBinderCourseMin) - projLevelDiff;
+                        }
+                        else
+                        {
+                            millingDepth = alloableMinMillingDepth;
+                        }
                     }
                 }
             }
@@ -186,13 +195,20 @@ namespace MillingDataEngine.Func
                 }
                 else
                 {
-                    if ( (alloableMinMillingDepth + projLevelDiff) < (projLayerThick + secondBinderCourseMin))
+                    if ((alloableMinMillingDepth * toleranceForMilling + projLevelDiff) < (projLayerThick + firstBinderCourseMax - firstBinderCourseMin))
                     {
-                        millingDepth = projLayerThick + secondBinderCourseMin - projLevelDiff;
+                        millingDepth = projLayerThick + firstBinderCourseMax - firstBinderCourseMin - projLevelDiff;
                     }
                     else
-                    {
-                        millingDepth = alloableMinMillingDepth;
+                    {                    
+                        if ( (alloableMinMillingDepth + projLevelDiff) < (projLayerThick + secondBinderCourseMin))
+                        {
+                            millingDepth = projLayerThick + secondBinderCourseMin - projLevelDiff;
+                        }
+                        else
+                        {
+                            millingDepth = alloableMinMillingDepth;
+                        }
                     }
                 }
             }
