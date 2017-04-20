@@ -52,20 +52,45 @@ namespace MillingDataEngine.DataStruct
 
         private List<MIllingQuantity> CalcMillingQuantities()
         {
-            List<MIllingQuantity> quantityForReturning = new List<MIllingQuantity>();
-           
-            int countOfAllMillingElements = MillingElements.Count;
-            quantityForReturning.Add(new MIllingQuantity(MillingElements[0].RangeScope, MillingElements[0].LineLength, MillingElements[0].LayerName));
 
+            List<MIllingQuantity> quantityForReturning = new List<MIllingQuantity>();
+
+            double securityDistance = 0; // this is dynamic distance in the edge of road pavement
+            double refStartOfMillingElements = -1 * MillingElements[0].RefStart;
+
+            if (MillingElements[0].StartPoint.CoordinateY == refStartOfMillingElements + Width / 2 ||
+                   MillingElements[0].EndPoint.CoordinateY == refStartOfMillingElements - Width / 2)
+            {
+                securityDistance = 0.25;
+            }
+            else
+            {
+                securityDistance = 0;
+            }
+
+            int countOfAllMillingElements = MillingElements.Count;
+            quantityForReturning.Add(new MIllingQuantity(MillingElements[0].RangeScope, MillingElements[0].LineLength + securityDistance, MillingElements[0].LayerName));
+            
+                        
             for (int i = 1; i < countOfAllMillingElements; i++)
             {
-                if (quantityForReturning.Exists(x => x.Range == MillingElements[i].RangeScope))
+                if (MillingElements[i].StartPoint.CoordinateY == refStartOfMillingElements + Width / 2 ||
+                    MillingElements[i].EndPoint.CoordinateY == refStartOfMillingElements - Width / 2)
                 {
-                    quantityForReturning.Find(x => x.Range == MillingElements[i].RangeScope).Quant += MillingElements[i].LineLength;
+                    securityDistance = 0.25;
                 }
                 else
                 {
-                    quantityForReturning.Add(new MIllingQuantity(MillingElements[i].RangeScope, MillingElements[i].LineLength, MillingElements[i].LayerName));
+                    securityDistance = 0;
+                }
+                
+                if (quantityForReturning.Exists(x => x.Range == MillingElements[i].RangeScope))
+                {
+                    quantityForReturning.Find(x => x.Range == MillingElements[i].RangeScope).Quant += MillingElements[i].LineLength + securityDistance;
+                }
+                else
+                {
+                    quantityForReturning.Add(new MIllingQuantity(MillingElements[i].RangeScope, MillingElements[i].LineLength + securityDistance, MillingElements[i].LayerName));
                 }
             }
             List<MIllingQuantity> sortedQuantList = quantityForReturning.OrderByDescending(x => x.Range[0]).ToList();

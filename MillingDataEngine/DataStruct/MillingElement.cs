@@ -29,10 +29,6 @@ namespace MillingDataEngine.DataStruct
         
         public MillingElement(double station, string profileName, double lineStart, double lineLength, double startMillingDepth, double endMillingDepth)
         {
-            if (profileName == "206")
-            {
-                Console.WriteLine();
-            }
             Station = station;
             LineStart = lineStart;
             LineLength = lineLength;

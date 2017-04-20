@@ -138,10 +138,10 @@ namespace AutoCad_milling
                         double station = MillingDataEngine.Func.SectionViews.ConvertNameToStationLocation(theSectionView.Name);
 
                         // for debuging |
-                        if (tempCounterCrossSectionSectionView == 25)
-                        {
-                            Console.WriteLine();
-                        }
+                        //if (tempCounterCrossSectionSectionView == 25)
+                        //{
+                        //    Console.WriteLine();
+                        //}
                         // for debuging ^
 
                         if (theRoadSection.CrossSections.Exists(x => MillingDataEngine.Func.SectionViews.IsSTationsMatch(x, station)))
@@ -153,7 +153,7 @@ namespace AutoCad_milling
                             theRoadSection.AddCrossSectionview(tempCrossForCV);
                             
                             // for debuging |
-                            tempCounterCrossSectionSectionView++;
+                            //tempCounterCrossSectionSectionView++;
                             // for debuging ^
                         } 
                     }

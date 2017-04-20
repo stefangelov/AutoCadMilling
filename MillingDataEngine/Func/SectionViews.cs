@@ -8,7 +8,8 @@ namespace MillingDataEngine.Func
         // find elevation of insert point of the cross section view
         public static double ElevationOfLocationPoint(double minSectionViewElevation, double distance)
         {
-            return (int)(minSectionViewElevation - minSectionViewElevation % 10 - distance);
+            int resultToReturn = (int)(minSectionViewElevation - minSectionViewElevation % 1 - distance);
+            return resultToReturn;
         }
 
         //convert station string to station location
