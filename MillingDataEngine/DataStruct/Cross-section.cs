@@ -22,6 +22,8 @@ namespace MillingDataEngine.DataStruct
             LeftEdgeElevation = leftEdgeElev;
             RightEdgeElevation = rightEdgeElev;
 
+            Station = station;
+
             MidPoint_Elevation = midElev;
             
             if (!isToSectionView)

@@ -70,6 +70,7 @@
     <Compile Include="DataStruct\ThreeDPoint.cs" />
     <Compile Include="Func\DrawMillingElements.cs" />
     <Compile Include="Func\ExcelDataRead.cs" />
+    <Compile Include="Func\ExcelDataWriter.cs" />
     <Compile Include="Func\Layers.cs" />
     <Compile Include="Func\SectionViews.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
