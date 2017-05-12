@@ -5,7 +5,7 @@ namespace MillingDataEngine.Func
 {
     public class SectionViews
     {
-        // find elevation of insert point of the cross section view
+        // find elevation of insert point of the cross section view ---- Is not necessary -----
         public static double ElevationOfLocationPoint(double minSectionViewElevation, double distance)
         {
             int resultToReturn = (int)(minSectionViewElevation - minSectionViewElevation % 1 - distance);
@@ -17,8 +17,13 @@ namespace MillingDataEngine.Func
         {
             double station = 0;
             int indexOfPlus = nameOfCrossSectionView.IndexOf("+");
+            
+            if (indexOfPlus > 1)
+            {
+                Console.WriteLine();
+            }
             int indexOfFreeSpace = nameOfCrossSectionView.IndexOf(" ");
-            string stationString = nameOfCrossSectionView.Substring(0, indexOfPlus) + nameOfCrossSectionView.Substring(indexOfPlus + 1, indexOfFreeSpace-1);
+            string stationString = nameOfCrossSectionView.Substring(0, indexOfPlus) + nameOfCrossSectionView.Substring(indexOfPlus + 1, indexOfFreeSpace - 1 - indexOfPlus - 1);
             try
             {
                 station = Convert.ToDouble(stationString);
@@ -29,12 +34,6 @@ namespace MillingDataEngine.Func
             }
 
             return station;
-        }
-
-        public static bool IsSTationsMatch (MillingDataEngine.DataStruct.Cross_section crossSection, double searchStation, double range = 0.50d)
-        {
-            return (crossSection.MillingElements.Count > 0 &&
-                ((crossSection.MillingElements[0].Station >= searchStation - range || crossSection.MillingElements[0].Station >= searchStation + range)));
         }
 
     }

@@ -46,3 +46,9 @@ FATAL ERROR:  Unhandled Access Violation Reading 0x0000 Exception at 96e78b92h
 
 03/15/2017 at 15:58:45.405  Drawing: Drawing1.dwg
 -------------
+
+
+INTERNAL ERROR:  !dbobji.cpp@8615: eNotOpenForWrite
+
+05/11/2017 at 09:24:53.248  Drawing: C:\Users\Stefan\Desktop\Напречни профили с антетки_1-9  км C3D.dwg
+-------------

@@ -94,11 +94,17 @@ namespace MillingDataEngine.Func
 
             string profilName = singleRow[1];
 
+            if (profilName == "10")
+            {
+                Console.WriteLine();
+            }
+
             int iterationEnd = (rowLength - 4) / 2 + 2 - 1;
             double crossSectionWidth = Convert.ToDouble(singleRow[rowLength - 2]);
             double elementWidth = crossSectionWidth / (iterationEnd - 2); // distance between two points wiht elevation
             double projLayerThick = Convert.ToDouble(singleRow[rowLength - 1]); // Thickness of project asphalt layers
-            double allowableMinMillingDepth = Convert.ToDouble(singleRow[rowLength]); // Min alloable milling depth according to geomechanic
+            double allowableMinMillingDepth = 0; // Min alloable milling depth according to geomechanic
+            double.TryParse(singleRow[rowLength], out allowableMinMillingDepth); //if thre is value take the value or just pass 0
 
             double leftEdgeProjectLevel = 0;
             double midProjectLevel = 0;
@@ -227,12 +233,12 @@ namespace MillingDataEngine.Func
             double startMillingDepth = (projStartLevel - projLayerThick / 100 - existStartLevel) * -100;
             double endMillingDepth = (projEndLevel - projLayerThick / 100 - existEndLevel) * -100;
 
-            if (startMillingDepth < allowableMinMillingDepth)
+            if (startMillingDepth < allowableMinMillingDepth && allowableMinMillingDepth > 0)
             {
                 double projLevelDiff = (projStartLevel - existStartLevel) * 100;
                 startMillingDepth = FindNewMillingDepth(allowableMinMillingDepth, projLayerThick, projLevelDiff);
             }
-            if (endMillingDepth < allowableMinMillingDepth)
+            if (endMillingDepth < allowableMinMillingDepth && allowableMinMillingDepth > 0)
             {
                 double projLevelDiff = (projEndLevel - existEndLevel) * 100;
                 endMillingDepth = FindNewMillingDepth(allowableMinMillingDepth, projLayerThick, projLevelDiff);

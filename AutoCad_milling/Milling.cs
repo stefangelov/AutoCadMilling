@@ -10,6 +10,9 @@ using Autodesk.AutoCAD.EditorInput;
 using Autodesk.Civil.DatabaseServices;
 using Autodesk.AECC.Interop.Roadway;
 using System.IO;
+using System.Linq;
+
+using Section = Autodesk.Civil.DatabaseServices.Section;
 
 
 namespace AutoCad_milling
@@ -90,6 +93,20 @@ namespace AutoCad_milling
                     Alignment myAlignment = ts.GetObject(alignID, OpenMode.ForRead) as Alignment;
                     ObjectIdCollection sampleLineIdCollection = myAlignment.GetSampleLineGroupIds();
                     SampleLineGroup sampleLineGroup = sampleLineIdCollection[0].GetObject(OpenMode.ForRead) as SampleLineGroup; //if you have problem chech here
+
+                    foreach (ObjectId sampleLineId in sampleLineGroup.GetSampleLineIds())
+                    {
+                        SampleLine sampleLine = ts.GetObject(sampleLineId, OpenMode.ForRead) as SampleLine;
+
+                        foreach (ObjectId sectionId in sampleLine.GetSectionIds())
+                        {
+                            Section section = ts.GetObject(sectionId, OpenMode.ForWrite) as Section;
+                            ed.WriteMessage("Section {0} elevation max: {1} min: {2}\n", section.Name, section.MaximumElevation, section.MinmumElevation);
+                            // set the section update mode:
+                            //section.UpdateMode = SectionUpdateType.Dynamic;
+                        }
+                    }
+
                     SectionViewGroupCollection sectionViewGrouopColection = sampleLineGroup.SectionViewGroups;
 
                     int sectionViewNumber = 0;
@@ -110,51 +127,31 @@ namespace AutoCad_milling
                     SectionViewGroup theSectionViewGroup = sectionViewGrouopColection[sectionViewNumber - 1];
                     ObjectIdCollection sectionViewIdColection = theSectionViewGroup.GetSectionViewIds();
 
-                    double userChoiseForDistBetweenInsPointAndMinElev = 0;
-                    try
-                    {
-                        string askString = String.Format("\nEnter value for distance between min elevation and insert point: ", sectionViewGrouopColection.Count);
-                        userChoiseForDistBetweenInsPointAndMinElev = Convert.ToDouble(GetStringFromUser(ed, askString));
-                    }
-                    catch (System.Exception)
-                    {
-                        ed.WriteMessage("Value must be positive INTEGER value!");
-                        return;
-                    }
-
                     // create milling Elements
                     MillingDataEngine.DataStruct.RoadSection theRoadSection = MillingDataEngine.Func.ExcelDataRead.RoadSectionElementsBuilder(MillingDataEngine.Func.ExcelDataRead.ReadData());
-                    int tempCounterCrossSectionSectionView = 0;
 
                     foreach (ObjectId sectionViewId in sectionViewIdColection)
                     {
-                        SectionView theSectionView = ts.GetObject(sectionViewId, OpenMode.ForRead) as SectionView;
+                        SectionView theSectionView = ts.GetObject(sectionViewId, OpenMode.ForWrite) as SectionView;
 
+                        theSectionView.IsElevationRangeAutomatic = false;
                         string minRangeElevation = theSectionView.ElevationMin.ToString();
-                        SectionViewProfileGradePointCollection sectionViewPointCollection = theSectionView.ProfileGradePoints;
+                        theSectionView.IsElevationRangeAutomatic = true;
+
                         MillingDataEngine.DataStruct.ThreeDPoint theLocation = new MillingDataEngine.DataStruct.ThreeDPoint(theSectionView.Location.X, theSectionView.Location.Y, Convert.ToInt32(theSectionView.Location.Z));
-                        double baseElevation = MillingDataEngine.Func.SectionViews.ElevationOfLocationPoint(theSectionView.ElevationMin, userChoiseForDistBetweenInsPointAndMinElev);
+                        double baseElevation = Convert.ToDouble(minRangeElevation);
 
                         double station = MillingDataEngine.Func.SectionViews.ConvertNameToStationLocation(theSectionView.Name);
 
-                        // for debuging |
-                        //if (tempCounterCrossSectionSectionView == 25)
-                        //{
-                        //    Console.WriteLine();
-                        //}
-                        // for debuging ^
+                        double range = 0.5; //+- range of stations
 
-                        if (theRoadSection.CrossSections.Exists(x => MillingDataEngine.Func.SectionViews.IsSTationsMatch(x, station)))
+                        // search maching of cross section in drowing ana xls tanble
+                        MillingDataEngine.DataStruct.Cross_section tempCross = theRoadSection.CrossSections.Find((x) => ((x.Station >= station - range && x.Station <= station) ||
+                                                                                                                        (x.Station <= station + range && x.Station >= station)));
+                        if (tempCross != null && tempCross.MillingElements.Count > 0) //if there is milling elements go next
                         {
-                            MillingDataEngine.DataStruct.Cross_section_for_sectionView tempCrossForCV =
-                                new MillingDataEngine.DataStruct.Cross_section_for_sectionView(theRoadSection.CrossSections.Find(
-                                    x => MillingDataEngine.Func.SectionViews.IsSTationsMatch(x, station)), theLocation, baseElevation);
-                            
+                            MillingDataEngine.DataStruct.Cross_section_for_sectionView tempCrossForCV = new MillingDataEngine.DataStruct.Cross_section_for_sectionView(tempCross, theLocation, baseElevation);
                             theRoadSection.AddCrossSectionview(tempCrossForCV);
-                            
-                            // for debuging |
-                            //tempCounterCrossSectionSectionView++;
-                            // for debuging ^
                         } 
                     }
 
@@ -163,8 +160,8 @@ namespace AutoCad_milling
                 }
                 catch (System.Exception e)
                 {
-                    throw new System.Exception(e.Message);
-                    //ed.WriteMessage(e.Message);
+                    //throw new System.Exception(e.Message);
+                    ed.WriteMessage(e.Message);
                     //return;
                 }
                   
