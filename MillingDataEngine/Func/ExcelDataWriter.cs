@@ -35,34 +35,37 @@ namespace MillingDataEngine.Func
             var row = 1;
             foreach (var cs in crossSections)
             {
-                row++;
-
-                workSheet.Cells[row, "A"] = cs.Station;
-                workSheet.Cells[row, "B"] = cs.Name;
-
-                foreach (var quant in cs.MillingQuantity)
+                if (cs.MillingElements.Count > 0)
                 {
-                    if (quant.Range[0] == 0 && quant.Range[1] == 3)
+                    row++;
+
+                    workSheet.Cells[row, "A"] = cs.Station;
+                    workSheet.Cells[row, "B"] = cs.Name;
+
+                    foreach (var quant in cs.MillingQuantity)
                     {
-                        workSheet.Cells[row, "C"] = String.Format("{0:0.00}", quant.Quant);
-                    }
-                    else
-                    {
-                        if (quant.Range[0] == 3 && quant.Range[1] == 5)
+                        if (quant.Range[0] == 0 && quant.Range[1] == 3)
                         {
-                            workSheet.Cells[row, "E"] = String.Format("{0:0.00}", quant.Quant);
+                            workSheet.Cells[row, "C"] = String.Format("{0:0.00}", quant.Quant);
                         }
                         else
                         {
-                            if (quant.Range[0] == 5 && quant.Range[1] == 7)
+                            if (quant.Range[0] == 3 && quant.Range[1] == 5)
                             {
-                                workSheet.Cells[row, "G"] = String.Format("{0:0.00}", quant.Quant);
+                                workSheet.Cells[row, "E"] = String.Format("{0:0.00}", quant.Quant);
                             }
                             else
                             {
-                                if (quant.Range[0] >= 7)
+                                if (quant.Range[0] == 5 && quant.Range[1] == 7)
                                 {
-                                    workSheet.Cells[row, "I"] = String.Format("{0:0.00}", quant.Quant);
+                                    workSheet.Cells[row, "G"] = String.Format("{0:0.00}", quant.Quant);
+                                }
+                                else
+                                {
+                                    if (quant.Range[0] >= 7)
+                                    {
+                                        workSheet.Cells[row, "I"] = String.Format("{0:0.00}", quant.Quant);
+                                    }
                                 }
                             }
                         }
