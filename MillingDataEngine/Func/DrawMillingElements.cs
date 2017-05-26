@@ -84,14 +84,16 @@ namespace MillingDataEngine.Func
                 // set necessary layer
                 MillingDataEngine.Func.Layers.SetAsCurrent(millingElement.LayerName, acCurDb);
 
-                // Create a line 
-                Line acLine = new Line(new Point3d(millingElement.StartPoint.CoordinateX, millingElement.StartPoint.CoordinateY, millingElement.StartPoint.CoordinateZ),
-                new Point3d(millingElement.EndPoint.CoordinateX, millingElement.EndPoint.CoordinateY, millingElement.EndPoint.CoordinateZ));
-                acLine.SetDatabaseDefaults();
-
-                // Add the new object to the block table record and the transaction
-                acBlkTblRec.AppendEntity(acLine);
-                acTrans.AddNewlyCreatedDBObject(acLine, true);
+                // Create a line
+                if (isToProfileView)
+                {
+                    Line acLine = new Line(new Point3d(millingElement.StartPoint.CoordinateX, millingElement.StartPoint.CoordinateY, millingElement.StartPoint.CoordinateZ),
+                    new Point3d(millingElement.EndPoint.CoordinateX, millingElement.EndPoint.CoordinateY, millingElement.EndPoint.CoordinateZ));
+                    acLine.SetDatabaseDefaults();
+                    // Add the new object to the block table record and the transaction
+                    acBlkTblRec.AppendEntity(acLine);
+                    acTrans.AddNewlyCreatedDBObject(acLine, true);
+                }
 
                 millingElementIndex++;
             }
